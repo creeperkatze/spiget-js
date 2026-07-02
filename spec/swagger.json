@@ -1,0 +1,2188 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Documentation for Spiget\nSpiget is an API to quickly and easily get information about Spigot plugins, resources and authors\n",
+    "version" : "2.0",
+    "title" : "Spiget",
+    "contact" : {
+      "name" : "inventivetalent",
+      "url" : "https://inventivetalent.org/contact",
+      "email" : "info@inventivetalent.org"
+    },
+    "license" : {
+      "name" : "Apache License 2.0",
+      "url" : "https://github.com/SpiGetOrg/Spiget/blob/master/LICENSE.md"
+    }
+  },
+  "host" : "api.spiget.org",
+  "basePath" : "/v2",
+  "schemes" : [ "https", "http" ],
+  "consumes" : [ "application/json" ],
+  "produces" : [ "application/json" ],
+  "paths" : {
+    "/authors" : {
+      "get" : {
+        "tags" : [ "authors" ],
+        "summary" : "Author List",
+        "description" : "Get a list of available authors\nNote: This only includes members involved with resources, either being their author or having reviewed a resource\n",
+        "parameters" : [ {
+          "name" : "size",
+          "in" : "query",
+          "description" : "Size of the returned array",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Page index",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "sort",
+          "in" : "query",
+          "description" : "Field to sort by. (Use a +/- prefix for ascending/descending order)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "fields",
+          "in" : "query",
+          "description" : "Fields to return, separated by commas",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Author Array",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Author"
+              }
+            },
+            "headers" : {
+              "X-Page-Sort" : {
+                "type" : "string",
+                "description" : "Field the elements are sorted by"
+              },
+              "X-Page-Order" : {
+                "type" : "integer",
+                "description" : "Sort order"
+              },
+              "X-Page-Size" : {
+                "type" : "integer",
+                "description" : "Number of elements on the current page"
+              },
+              "X-Page-Index" : {
+                "type" : "integer",
+                "description" : "Current page index"
+              },
+              "X-Page-Count" : {
+                "type" : "integer",
+                "description" : "Total amount of pages"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/authors/{author}" : {
+      "get" : {
+        "tags" : [ "authors" ],
+        "summary" : "Author Details",
+        "description" : "Get details about an author\n",
+        "parameters" : [ {
+          "name" : "author",
+          "in" : "path",
+          "description" : "Author ID",
+          "required" : true,
+          "type" : "number"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/Author"
+            }
+          }
+        }
+      }
+    },
+    "/authors/{author}/resources" : {
+      "get" : {
+        "tags" : [ "authors" ],
+        "summary" : "Author resources",
+        "description" : "Get an author's resources\n",
+        "parameters" : [ {
+          "name" : "author",
+          "in" : "path",
+          "description" : "Author ID",
+          "required" : true,
+          "type" : "number"
+        }, {
+          "name" : "size",
+          "in" : "query",
+          "description" : "Size of the returned array",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Page index",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "sort",
+          "in" : "query",
+          "description" : "Field to sort by. (Use a +/- prefix for ascending/descending order)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "fields",
+          "in" : "query",
+          "description" : "Fields to return, separated by commas",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Resource Array",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Resource"
+              }
+            },
+            "headers" : {
+              "X-Page-Sort" : {
+                "type" : "string",
+                "description" : "Field the elements are sorted by"
+              },
+              "X-Page-Order" : {
+                "type" : "integer",
+                "description" : "Sort order"
+              },
+              "X-Page-Size" : {
+                "type" : "integer",
+                "description" : "Number of elements on the current page"
+              },
+              "X-Page-Index" : {
+                "type" : "integer",
+                "description" : "Current page index"
+              },
+              "X-Page-Count" : {
+                "type" : "integer",
+                "description" : "Total amount of pages"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/authors/{author}/reviews" : {
+      "get" : {
+        "tags" : [ "authors" ],
+        "summary" : "Author reviews",
+        "description" : "Get an author's reviews left on resources\n",
+        "parameters" : [ {
+          "name" : "author",
+          "in" : "path",
+          "description" : "Author ID",
+          "required" : true,
+          "type" : "number"
+        }, {
+          "name" : "size",
+          "in" : "query",
+          "description" : "Size of the returned array",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Page index",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "sort",
+          "in" : "query",
+          "description" : "Field to sort by. (Use a +/- prefix for ascending/descending order)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "fields",
+          "in" : "query",
+          "description" : "Fields to return, separated by commas",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Review Array",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/ResourceReview"
+              }
+            },
+            "headers" : {
+              "X-Page-Sort" : {
+                "type" : "string",
+                "description" : "Field the elements are sorted by"
+              },
+              "X-Page-Order" : {
+                "type" : "integer",
+                "description" : "Sort order"
+              },
+              "X-Page-Size" : {
+                "type" : "integer",
+                "description" : "Number of elements on the current page"
+              },
+              "X-Page-Index" : {
+                "type" : "integer",
+                "description" : "Current page index"
+              },
+              "X-Page-Count" : {
+                "type" : "integer",
+                "description" : "Total amount of pages"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/categories" : {
+      "get" : {
+        "tags" : [ "categories" ],
+        "summary" : "Category List",
+        "description" : "Get a list of categories\n",
+        "parameters" : [ {
+          "name" : "size",
+          "in" : "query",
+          "description" : "Size of the returned array",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Page index",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "sort",
+          "in" : "query",
+          "description" : "Field to sort by. (Use a +/- prefix for ascending/descending order)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "fields",
+          "in" : "query",
+          "description" : "Fields to return, separated by commas",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Category Array",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Category"
+              }
+            },
+            "headers" : {
+              "X-Page-Sort" : {
+                "type" : "string",
+                "description" : "Field the elements are sorted by"
+              },
+              "X-Page-Order" : {
+                "type" : "integer",
+                "description" : "Sort order"
+              },
+              "X-Page-Size" : {
+                "type" : "integer",
+                "description" : "Number of elements on the current page"
+              },
+              "X-Page-Index" : {
+                "type" : "integer",
+                "description" : "Current page index"
+              },
+              "X-Page-Count" : {
+                "type" : "integer",
+                "description" : "Total amount of pages"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/categories/{category}" : {
+      "get" : {
+        "tags" : [ "categories" ],
+        "summary" : "Category Details",
+        "description" : "Get details about a category\n",
+        "parameters" : [ {
+          "name" : "category",
+          "in" : "path",
+          "description" : "Category ID",
+          "required" : true,
+          "type" : "number"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/Category"
+            }
+          }
+        }
+      }
+    },
+    "/categories/{category}/resources" : {
+      "get" : {
+        "tags" : [ "categories" ],
+        "summary" : "Category Resources",
+        "description" : "Get the resources in a category\n",
+        "parameters" : [ {
+          "name" : "category",
+          "in" : "path",
+          "description" : "Category ID",
+          "required" : true,
+          "type" : "number"
+        }, {
+          "name" : "size",
+          "in" : "query",
+          "description" : "Size of the returned array",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Page index",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "sort",
+          "in" : "query",
+          "description" : "Field to sort by. (Use a +/- prefix for ascending/descending order)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "fields",
+          "in" : "query",
+          "description" : "Fields to return, separated by commas",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Resource Array",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Resource"
+              }
+            },
+            "headers" : {
+              "X-Page-Sort" : {
+                "type" : "string",
+                "description" : "Field the elements are sorted by"
+              },
+              "X-Page-Order" : {
+                "type" : "integer",
+                "description" : "Sort order"
+              },
+              "X-Page-Size" : {
+                "type" : "integer",
+                "description" : "Number of elements on the current page"
+              },
+              "X-Page-Index" : {
+                "type" : "integer",
+                "description" : "Current page index"
+              },
+              "X-Page-Count" : {
+                "type" : "integer",
+                "description" : "Total amount of pages"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/resources" : {
+      "get" : {
+        "tags" : [ "resources" ],
+        "summary" : "Resource List",
+        "description" : "Get a list of available resources (premium and free)\n",
+        "parameters" : [ {
+          "name" : "size",
+          "in" : "query",
+          "description" : "Size of the returned array",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Page index",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "sort",
+          "in" : "query",
+          "description" : "Field to sort by. (Use a +/- prefix for ascending/descending order)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "fields",
+          "in" : "query",
+          "description" : "Fields to return, separated by commas",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Resource Array",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Resource"
+              }
+            },
+            "headers" : {
+              "X-Page-Sort" : {
+                "type" : "string",
+                "description" : "Field the elements are sorted by"
+              },
+              "X-Page-Order" : {
+                "type" : "integer",
+                "description" : "Sort order"
+              },
+              "X-Page-Size" : {
+                "type" : "integer",
+                "description" : "Number of elements on the current page"
+              },
+              "X-Page-Index" : {
+                "type" : "integer",
+                "description" : "Current page index"
+              },
+              "X-Page-Count" : {
+                "type" : "integer",
+                "description" : "Total amount of pages"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/resources/for/{version}" : {
+      "get" : {
+        "tags" : [ "resources" ],
+        "summary" : "Resources for Versions",
+        "description" : "Get resources for the specified version(s)\n",
+        "parameters" : [ {
+          "name" : "version",
+          "in" : "path",
+          "description" : "Version(s), separated by commas",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "method",
+          "in" : "query",
+          "description" : "Method to use to check for versions",
+          "required" : false,
+          "type" : "string",
+          "enum" : [ "any", "all" ]
+        }, {
+          "name" : "size",
+          "in" : "query",
+          "description" : "Size of the returned array",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Page index",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "sort",
+          "in" : "query",
+          "description" : "Field to sort by. (Use a +/- prefix for ascending/descending order)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "fields",
+          "in" : "query",
+          "description" : "Fields to return, separated by commas",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Resource Array",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Resource"
+              }
+            },
+            "headers" : {
+              "X-Page-Sort" : {
+                "type" : "string",
+                "description" : "Field the elements are sorted by"
+              },
+              "X-Page-Order" : {
+                "type" : "integer",
+                "description" : "Sort order"
+              },
+              "X-Page-Size" : {
+                "type" : "integer",
+                "description" : "Number of elements on the current page"
+              },
+              "X-Page-Index" : {
+                "type" : "integer",
+                "description" : "Current page index"
+              },
+              "X-Page-Count" : {
+                "type" : "integer",
+                "description" : "Total amount of pages"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/resources/free" : {
+      "get" : {
+        "tags" : [ "resources" ],
+        "summary" : "Free Resource List",
+        "description" : "Get a list of available free resources\n",
+        "parameters" : [ {
+          "name" : "size",
+          "in" : "query",
+          "description" : "Size of the returned array",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Page index",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "sort",
+          "in" : "query",
+          "description" : "Field to sort by. (Use a +/- prefix for ascending/descending order)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "fields",
+          "in" : "query",
+          "description" : "Fields to return, separated by commas",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Resource Array",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Resource"
+              }
+            },
+            "headers" : {
+              "X-Page-Sort" : {
+                "type" : "string",
+                "description" : "Field the elements are sorted by"
+              },
+              "X-Page-Order" : {
+                "type" : "integer",
+                "description" : "Sort order"
+              },
+              "X-Page-Size" : {
+                "type" : "integer",
+                "description" : "Number of elements on the current page"
+              },
+              "X-Page-Index" : {
+                "type" : "integer",
+                "description" : "Current page index"
+              },
+              "X-Page-Count" : {
+                "type" : "integer",
+                "description" : "Total amount of pages"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/resources/new" : {
+      "get" : {
+        "tags" : [ "resources" ],
+        "summary" : "New Resources",
+        "description" : "Get all new resources\n",
+        "parameters" : [ {
+          "name" : "size",
+          "in" : "query",
+          "description" : "Size of the returned array",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Page index",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "sort",
+          "in" : "query",
+          "description" : "Field to sort by. (Use a +/- prefix for ascending/descending order)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "fields",
+          "in" : "query",
+          "description" : "Fields to return, separated by commas",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Resource Array",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Resource"
+              }
+            },
+            "headers" : {
+              "X-Page-Sort" : {
+                "type" : "string",
+                "description" : "Field the elements are sorted by"
+              },
+              "X-Page-Order" : {
+                "type" : "integer",
+                "description" : "Sort order"
+              },
+              "X-Page-Size" : {
+                "type" : "integer",
+                "description" : "Number of elements on the current page"
+              },
+              "X-Page-Index" : {
+                "type" : "integer",
+                "description" : "Current page index"
+              },
+              "X-Page-Count" : {
+                "type" : "integer",
+                "description" : "Total amount of pages"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/resources/premium" : {
+      "get" : {
+        "tags" : [ "resources" ],
+        "summary" : "Premium Resource List",
+        "description" : "Get a list of available premium resources\n",
+        "parameters" : [ {
+          "name" : "size",
+          "in" : "query",
+          "description" : "Size of the returned array",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Page index",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "sort",
+          "in" : "query",
+          "description" : "Field to sort by. (Use a +/- prefix for ascending/descending order)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "fields",
+          "in" : "query",
+          "description" : "Fields to return, separated by commas",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Resource Array",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Resource"
+              }
+            },
+            "headers" : {
+              "X-Page-Sort" : {
+                "type" : "string",
+                "description" : "Field the elements are sorted by"
+              },
+              "X-Page-Order" : {
+                "type" : "integer",
+                "description" : "Sort order"
+              },
+              "X-Page-Size" : {
+                "type" : "integer",
+                "description" : "Number of elements on the current page"
+              },
+              "X-Page-Index" : {
+                "type" : "integer",
+                "description" : "Current page index"
+              },
+              "X-Page-Count" : {
+                "type" : "integer",
+                "description" : "Total amount of pages"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/resources/{resource}" : {
+      "get" : {
+        "tags" : [ "resources" ],
+        "summary" : "Resource Details",
+        "description" : "Get a resource by its ID\n",
+        "parameters" : [ {
+          "name" : "resource",
+          "in" : "path",
+          "description" : "Resource ID",
+          "required" : true,
+          "type" : "number"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/Resource"
+            }
+          },
+          "404" : {
+            "description" : "Requested object not found"
+          }
+        }
+      }
+    },
+    "/resources/{resource}/author" : {
+      "get" : {
+        "tags" : [ "resources" ],
+        "summary" : "Resource Author",
+        "description" : "Get the resource author\n",
+        "parameters" : [ {
+          "name" : "resource",
+          "in" : "path",
+          "description" : "Resource ID",
+          "required" : true,
+          "type" : "number"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/Author"
+            }
+          }
+        }
+      }
+    },
+    "/resources/{resource}/download" : {
+      "get" : {
+        "tags" : [ "resources" ],
+        "summary" : "Resource Download",
+        "description" : "Download a resource\nThis either redirects to spiget's CDN server (cdn.spiget.org) for a direct download of files hosted on spigotmc.org or to the URL of externally hosted resources\nThe `external` field of a resource should be checked before downloading, to not receive any unexpected data\n",
+        "parameters" : [ {
+          "name" : "resource",
+          "in" : "path",
+          "description" : "Resource ID",
+          "required" : true,
+          "type" : "number"
+        } ],
+        "responses" : {
+          "302" : {
+            "description" : "File found\nRedirect to the file direct download OR the url of externally hosted resources\n",
+            "headers" : {
+              "X-Spiget-File-Source" : {
+                "type" : "string",
+                "description" : "File source, either `cdn` or `external`"
+              }
+            }
+          },
+          "404" : {
+            "description" : "Resource not found / File not Found"
+          }
+        }
+      }
+    },
+    "/resources/{resource}/reviews" : {
+      "get" : {
+        "tags" : [ "resources" ],
+        "summary" : "Resource Reviews",
+        "description" : "Get reviews of a resource\n",
+        "parameters" : [ {
+          "name" : "resource",
+          "in" : "path",
+          "description" : "Resource ID",
+          "required" : true,
+          "type" : "number"
+        }, {
+          "name" : "size",
+          "in" : "query",
+          "description" : "Size of the returned array",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Page index",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "sort",
+          "in" : "query",
+          "description" : "Field to sort by. (Use a +/- prefix for ascending/descending order)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "fields",
+          "in" : "query",
+          "description" : "Fields to return, separated by commas",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Review Array",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/ResourceReview"
+              }
+            },
+            "headers" : {
+              "X-Page-Sort" : {
+                "type" : "string",
+                "description" : "Field the elements are sorted by"
+              },
+              "X-Page-Order" : {
+                "type" : "integer",
+                "description" : "Sort order"
+              },
+              "X-Page-Size" : {
+                "type" : "integer",
+                "description" : "Number of elements on the current page"
+              },
+              "X-Page-Index" : {
+                "type" : "integer",
+                "description" : "Current page index"
+              },
+              "X-Page-Count" : {
+                "type" : "integer",
+                "description" : "Total amount of pages"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/resources/{resource}/updates" : {
+      "get" : {
+        "tags" : [ "resources" ],
+        "summary" : "Resource Updates",
+        "description" : "Get updates of a resource\n",
+        "parameters" : [ {
+          "name" : "resource",
+          "in" : "path",
+          "description" : "Resource ID",
+          "required" : true,
+          "type" : "number"
+        }, {
+          "name" : "size",
+          "in" : "query",
+          "description" : "Size of the returned array",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Page index",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "sort",
+          "in" : "query",
+          "description" : "Field to sort by. (Use a +/- prefix for ascending/descending order)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "fields",
+          "in" : "query",
+          "description" : "Fields to return, separated by commas",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Update Array",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/ResourceUpdate"
+              }
+            },
+            "headers" : {
+              "X-Page-Sort" : {
+                "type" : "string",
+                "description" : "Field the elements are sorted by"
+              },
+              "X-Page-Order" : {
+                "type" : "integer",
+                "description" : "Sort order"
+              },
+              "X-Page-Size" : {
+                "type" : "integer",
+                "description" : "Number of elements on the current page"
+              },
+              "X-Page-Index" : {
+                "type" : "integer",
+                "description" : "Current page index"
+              },
+              "X-Page-Count" : {
+                "type" : "integer",
+                "description" : "Total amount of pages"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/resources/{resource}/updates/latest" : {
+      "get" : {
+        "tags" : [ "resources" ],
+        "summary" : "Latest Resource Update",
+        "description" : "Get the latest resource update\n",
+        "parameters" : [ {
+          "name" : "resource",
+          "in" : "path",
+          "description" : "Resource ID",
+          "required" : true,
+          "type" : "number"
+        }, {
+          "name" : "size",
+          "in" : "query",
+          "description" : "Size of the returned array",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Page index",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "sort",
+          "in" : "query",
+          "description" : "Field to sort by. (Use a +/- prefix for ascending/descending order)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "fields",
+          "in" : "query",
+          "description" : "Fields to return, separated by commas",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/ResourceUpdate"
+            }
+          },
+          "404" : {
+            "description" : "Requested object not found"
+          }
+        }
+      }
+    },
+    "/resources/{resource}/versions" : {
+      "get" : {
+        "tags" : [ "resources" ],
+        "summary" : "Resource Versions",
+        "description" : "Get versions of a resource\n",
+        "parameters" : [ {
+          "name" : "resource",
+          "in" : "path",
+          "description" : "Resource ID",
+          "required" : true,
+          "type" : "number"
+        }, {
+          "name" : "size",
+          "in" : "query",
+          "description" : "Size of the returned array",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Page index",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "sort",
+          "in" : "query",
+          "description" : "Field to sort by. (Use a +/- prefix for ascending/descending order)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "fields",
+          "in" : "query",
+          "description" : "Fields to return, separated by commas",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Version Array",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/ResourceVersion"
+              }
+            },
+            "headers" : {
+              "X-Page-Sort" : {
+                "type" : "string",
+                "description" : "Field the elements are sorted by"
+              },
+              "X-Page-Order" : {
+                "type" : "integer",
+                "description" : "Sort order"
+              },
+              "X-Page-Size" : {
+                "type" : "integer",
+                "description" : "Number of elements on the current page"
+              },
+              "X-Page-Index" : {
+                "type" : "integer",
+                "description" : "Current page index"
+              },
+              "X-Page-Count" : {
+                "type" : "integer",
+                "description" : "Total amount of pages"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/resources/{resource}/versions/latest" : {
+      "get" : {
+        "tags" : [ "resources" ],
+        "summary" : "Latest Resource Version",
+        "description" : "Get the latest resource version\n",
+        "parameters" : [ {
+          "name" : "resource",
+          "in" : "path",
+          "description" : "Resource ID",
+          "required" : true,
+          "type" : "number"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/ResourceVersion"
+            }
+          },
+          "404" : {
+            "description" : "Requested object not found"
+          }
+        }
+      }
+    },
+    "/resources/{resource}/versions/{version}" : {
+      "get" : {
+        "tags" : [ "resources" ],
+        "summary" : "Resource Version",
+        "description" : "Get a specific resource version by its ID\n",
+        "parameters" : [ {
+          "name" : "resource",
+          "in" : "path",
+          "description" : "Resource ID",
+          "required" : true,
+          "type" : "number"
+        }, {
+          "name" : "version",
+          "in" : "path",
+          "description" : "Version ID",
+          "required" : true,
+          "type" : "number"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/ResourceVersion"
+            }
+          },
+          "404" : {
+            "description" : "Requested object not found"
+          }
+        }
+      }
+    },
+    "/resources/{resource}/versions/{version}/download" : {
+      "get" : {
+        "tags" : [ "resources" ],
+        "summary" : "Resource Version Download",
+        "description" : "Download a specific resource version\n\nNote: This only redirects to the stored download location and might not download a file (i.e. for external resources)\n",
+        "parameters" : [ {
+          "name" : "resource",
+          "in" : "path",
+          "description" : "Resource ID",
+          "required" : true,
+          "type" : "number"
+        }, {
+          "name" : "version",
+          "in" : "path",
+          "description" : "Version ID or 'latest'",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "302" : {
+            "description" : "Redirect to the download location",
+            "headers" : {
+              "Location" : {
+                "type" : "string",
+                "description" : "Download location"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/search/authors/{query}" : {
+      "get" : {
+        "tags" : [ "search", "authors" ],
+        "summary" : "Author Search",
+        "description" : "Search authors\n",
+        "parameters" : [ {
+          "name" : "query",
+          "in" : "path",
+          "description" : "Search query",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "field",
+          "in" : "query",
+          "description" : "Field to search in",
+          "required" : false,
+          "type" : "string",
+          "enum" : [ "name" ]
+        }, {
+          "name" : "size",
+          "in" : "query",
+          "description" : "Size of the returned array",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Page index",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "sort",
+          "in" : "query",
+          "description" : "Field to sort by. (Use a +/- prefix for ascending/descending order)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "fields",
+          "in" : "query",
+          "description" : "Fields to return, separated by commas",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Author Array",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Author"
+              }
+            },
+            "headers" : {
+              "X-Page-Sort" : {
+                "type" : "string",
+                "description" : "Field the elements are sorted by"
+              },
+              "X-Page-Order" : {
+                "type" : "integer",
+                "description" : "Sort order"
+              },
+              "X-Page-Size" : {
+                "type" : "integer",
+                "description" : "Number of elements on the current page"
+              },
+              "X-Page-Index" : {
+                "type" : "integer",
+                "description" : "Current page index"
+              },
+              "X-Page-Count" : {
+                "type" : "integer",
+                "description" : "Total amount of pages"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/search/resources/{query}" : {
+      "get" : {
+        "tags" : [ "search", "resources" ],
+        "summary" : "Resource Search",
+        "description" : "Search resources\n",
+        "parameters" : [ {
+          "name" : "query",
+          "in" : "path",
+          "description" : "Search query",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "field",
+          "in" : "query",
+          "description" : "Field to search in",
+          "required" : false,
+          "type" : "string",
+          "enum" : [ "name", "tag" ]
+        }, {
+          "name" : "size",
+          "in" : "query",
+          "description" : "Size of the returned array",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Page index",
+          "required" : false,
+          "type" : "number",
+          "format" : "integer"
+        }, {
+          "name" : "sort",
+          "in" : "query",
+          "description" : "Field to sort by. (Use a +/- prefix for ascending/descending order)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "fields",
+          "in" : "query",
+          "description" : "Fields to return, separated by commas",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Resource Array",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Resource"
+              }
+            },
+            "headers" : {
+              "X-Page-Sort" : {
+                "type" : "string",
+                "description" : "Field the elements are sorted by"
+              },
+              "X-Page-Order" : {
+                "type" : "integer",
+                "description" : "Sort order"
+              },
+              "X-Page-Size" : {
+                "type" : "integer",
+                "description" : "Number of elements on the current page"
+              },
+              "X-Page-Index" : {
+                "type" : "integer",
+                "description" : "Current page index"
+              },
+              "X-Page-Count" : {
+                "type" : "integer",
+                "description" : "Total amount of pages"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/status" : {
+      "get" : {
+        "tags" : [ "status" ],
+        "summary" : "API Status",
+        "description" : "Get the API status\n",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/inline_response_200"
+            }
+          }
+        }
+      }
+    },
+    "/webhook/delete/{id}/{secret}" : {
+      "delete" : {
+        "tags" : [ "webhook" ],
+        "summary" : "Delete Webhook",
+        "description" : "Delete a Webhook\n",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Webhook ID",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "secret",
+          "in" : "path",
+          "description" : "Webhook Secret",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "404" : {
+            "description" : "Requested object not found"
+          }
+        }
+      }
+    },
+    "/webhook/events" : {
+      "get" : {
+        "tags" : [ "webhook" ],
+        "summary" : "Webhook events",
+        "description" : "Get a list of available events\n",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/inline_response_200_1"
+            }
+          }
+        }
+      }
+    },
+    "/webhook/register" : {
+      "post" : {
+        "tags" : [ "webhook" ],
+        "summary" : "Register Webhook",
+        "description" : "Register a new Webhook\n\nUse this form to easily register a new one: https://spiget.org/webhook/\n",
+        "consumes" : [ "application/x-www-form-urlencoded" ],
+        "parameters" : [ {
+          "name" : "url",
+          "in" : "formData",
+          "description" : "URL to call",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "events",
+          "in" : "formData",
+          "description" : "Events to register",
+          "required" : true,
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/inline_response_200_2"
+            }
+          },
+          "400" : {
+            "description" : "Invalid request",
+            "schema" : {
+              "$ref" : "#/definitions/inline_response_400"
+            }
+          }
+        }
+      }
+    },
+    "/webhook/status/{id}" : {
+      "get" : {
+        "tags" : [ "webhook" ],
+        "summary" : "Webhook Status",
+        "description" : "Get the status of a Webhook\n",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of the Webhook",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/inline_response_200_3"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Resource" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "number",
+          "format" : "integer",
+          "description" : "Id of the Resource."
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "Name of the Resource."
+        },
+        "tag" : {
+          "type" : "string",
+          "description" : "Tag line of the Resource."
+        },
+        "contributors" : {
+          "type" : "string",
+          "description" : "Contributors of the Resource."
+        },
+        "likes" : {
+          "type" : "number",
+          "format" : "integer",
+          "description" : "Number of likes."
+        },
+        "file" : {
+          "$ref" : "#/definitions/ResourceFile"
+        },
+        "testedVersions" : {
+          "type" : "array",
+          "description" : "List with Tested Versions of the Resource.",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "links" : {
+          "type" : "object",
+          "description" : "Map of external and custom links in the resource description.",
+          "properties" : { }
+        },
+        "rating" : {
+          "$ref" : "#/definitions/ResourceRating"
+        },
+        "releaseDate" : {
+          "type" : "number",
+          "format" : "long",
+          "description" : "Release timestamp."
+        },
+        "updateDate" : {
+          "type" : "number",
+          "format" : "long",
+          "description" : "Update timestamp."
+        },
+        "downloads" : {
+          "type" : "number",
+          "format" : "integer",
+          "description" : "Amount of downloads."
+        },
+        "external" : {
+          "type" : "boolean",
+          "description" : "Whether this resource is external (not hosted on SpigotMC.org)."
+        },
+        "icon" : {
+          "$ref" : "#/definitions/Icon"
+        },
+        "premium" : {
+          "type" : "boolean",
+          "description" : "Whether the resource is a premium resource."
+        },
+        "price" : {
+          "type" : "number",
+          "format" : "double",
+          "description" : "Price of the resource (only if the resource is premium)."
+        },
+        "currency" : {
+          "type" : "string",
+          "description" : "Price Currency of the resource (only if the resource is premium)."
+        },
+        "author" : {
+          "$ref" : "#/definitions/IdReference"
+        },
+        "category" : {
+          "$ref" : "#/definitions/IdReference"
+        },
+        "version" : {
+          "$ref" : "#/definitions/IdAndUUIDReference"
+        },
+        "reviews" : {
+          "type" : "array",
+          "description" : "List of review IDs on this resource - only present if directly requesting the resource.",
+          "items" : {
+            "$ref" : "#/definitions/IdReference"
+          }
+        },
+        "versions" : {
+          "type" : "array",
+          "description" : "List of version IDs of this resource - only present if directly requesting the resource.",
+          "items" : {
+            "$ref" : "#/definitions/IdReference"
+          }
+        },
+        "updates" : {
+          "type" : "array",
+          "description" : "List of update IDs of this resource - only present if directly requesting the resource.",
+          "items" : {
+            "$ref" : "#/definitions/IdReference"
+          }
+        },
+        "sourceCodeLink" : {
+          "type" : "string",
+          "description" : "Source Code link of the Resource."
+        },
+        "donationLink" : {
+          "type" : "string",
+          "description" : "Donation link of the Resource."
+        }
+      },
+      "title" : "Resource",
+      "description" : "Main Resource model."
+    },
+    "ResourceFile" : {
+      "type" : "object",
+      "properties" : {
+        "type" : {
+          "type" : "string",
+          "description" : "File extension (.jar, .zip, .sk) or \"external\"."
+        },
+        "size" : {
+          "type" : "number",
+          "format" : "float",
+          "description" : "File size."
+        },
+        "sizeUnit" : {
+          "type" : "string",
+          "description" : "File size-unit (KB, MB, GB)."
+        },
+        "url" : {
+          "type" : "string",
+          "description" : "Relative URL to the file."
+        },
+        "externalUrl" : {
+          "type" : "string",
+          "description" : "URL of external downloads."
+        }
+      },
+      "title" : "Resource File",
+      "description" : "Model of a Resource File."
+    },
+    "Icon" : {
+      "type" : "object",
+      "properties" : {
+        "url" : {
+          "type" : "string",
+          "description" : "Relative URL to the image."
+        },
+        "data" : {
+          "type" : "string",
+          "description" : "Base64-Encoded image data."
+        }
+      },
+      "title" : "Resource Icon / Author Avatar",
+      "description" : "Model for Recource Icon or Author Avatar."
+    },
+    "ResourceVersion" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "number",
+          "format" : "integer",
+          "description" : "Version ID."
+        },
+        "uuid" : {
+          "type" : "string",
+          "description" : "Version UUID."
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "Version name (e.g. v1.0)."
+        },
+        "releaseDate" : {
+          "type" : "number",
+          "format" : "long",
+          "description" : "Timestamp of the version's release date."
+        },
+        "downloads" : {
+          "type" : "number",
+          "format" : "integer",
+          "description" : "Amount of downloads."
+        },
+        "rating" : {
+          "$ref" : "#/definitions/ResourceRating"
+        }
+      },
+      "title" : "Resource Version",
+      "description" : "Model for a Resource Version."
+    },
+    "ResourceUpdate" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "number",
+          "format" : "integer",
+          "description" : "Update ID."
+        },
+        "resource" : {
+          "type" : "number",
+          "format" : "integer",
+          "description" : "Resource ID."
+        },
+        "title" : {
+          "type" : "string",
+          "description" : "Update title."
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "Base64-Encoded description of the update."
+        },
+        "date" : {
+          "type" : "number",
+          "format" : "long",
+          "description" : "Update timestamp."
+        },
+        "likes" : {
+          "type" : "number",
+          "format" : "integer",
+          "description" : "Amount of likes for this update."
+        }
+      },
+      "title" : "Resource Update",
+      "description" : "Model for a Resource Update."
+    },
+    "ResourceRating" : {
+      "type" : "object",
+      "properties" : {
+        "count" : {
+          "type" : "number",
+          "format" : "integer",
+          "description" : "Number of ratings."
+        },
+        "average" : {
+          "type" : "number",
+          "format" : "float",
+          "description" : "Average rating."
+        }
+      },
+      "title" : "Resource Rating",
+      "description" : "Model for a Resource Rating."
+    },
+    "ResourceReview" : {
+      "type" : "object",
+      "properties" : {
+        "author" : {
+          "$ref" : "#/definitions/Author"
+        },
+        "rating" : {
+          "$ref" : "#/definitions/ResourceRating"
+        },
+        "message" : {
+          "type" : "string",
+          "description" : "Base64-Encoded Review message."
+        },
+        "responseMessage" : {
+          "type" : "string",
+          "description" : "Base64-Encoded message the author responded with."
+        },
+        "version" : {
+          "type" : "string",
+          "description" : "Version name the review was posted for."
+        },
+        "date" : {
+          "type" : "number",
+          "format" : "long",
+          "description" : "Review timestamp."
+        }
+      },
+      "title" : "Resource Review",
+      "description" : "Model for a Resource Review."
+    },
+    "Author" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "number",
+          "format" : "integer",
+          "description" : "Id of the author."
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "Author name."
+        },
+        "icon" : {
+          "$ref" : "#/definitions/Icon"
+        }
+      },
+      "title" : "Author",
+      "description" : "Model for an Author."
+    },
+    "Category" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "number",
+          "format" : "integer",
+          "description" : "Category ID."
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "Category name."
+        }
+      },
+      "title" : "Category",
+      "description" : "Model for a Category."
+    },
+    "IdReference" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "number",
+          "format" : "integer",
+          "description" : "ID of the Another Object."
+        }
+      },
+      "title" : "Id-Reference to another object"
+    },
+    "IdAndUUIDReference" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "number",
+          "format" : "integer",
+          "description" : "ID of the Another Object."
+        },
+        "uuid" : {
+          "type" : "string",
+          "description" : "UUID of the Another Object."
+        }
+      },
+      "title" : "Id and UUID Reference to another object"
+    },
+    "inline_response_200_status_fetch_page_item" : {
+      "properties" : {
+        "index" : {
+          "type" : "number",
+          "format" : "integer",
+          "description" : "Resource index on the current page"
+        }
+      }
+    },
+    "inline_response_200_status_fetch_page" : {
+      "properties" : {
+        "amount" : {
+          "type" : "number",
+          "format" : "integer",
+          "description" : "Amount of pages to load"
+        },
+        "index" : {
+          "type" : "number",
+          "format" : "integer",
+          "description" : "Current page index"
+        },
+        "item" : {
+          "$ref" : "#/definitions/inline_response_200_status_fetch_page_item"
+        }
+      }
+    },
+    "inline_response_200_status_fetch" : {
+      "properties" : {
+        "start" : {
+          "type" : "number",
+          "format" : "long",
+          "description" : "Timestamp of the last fetcher start"
+        },
+        "end" : {
+          "type" : "number",
+          "format" : "long",
+          "description" : "Timestamp of the last fetcher end (0 if currently active)"
+        },
+        "active" : {
+          "type" : "boolean",
+          "description" : "Whether the fetcher is currently active"
+        },
+        "page" : {
+          "$ref" : "#/definitions/inline_response_200_status_fetch_page"
+        }
+      }
+    },
+    "inline_response_200_status" : {
+      "properties" : {
+        "fetch" : {
+          "$ref" : "#/definitions/inline_response_200_status_fetch"
+        }
+      },
+      "description" : "Status overview"
+    },
+    "inline_response_200_stats" : {
+      "properties" : {
+        "resources" : {
+          "type" : "number",
+          "format" : "integer",
+          "description" : "Resource count"
+        },
+        "authors" : {
+          "type" : "number",
+          "format" : "integer",
+          "description" : "Author count"
+        },
+        "categories" : {
+          "type" : "number",
+          "format" : "integer",
+          "description" : "Category count"
+        },
+        "resource_updates" : {
+          "type" : "number",
+          "format" : "integer",
+          "description" : "Resource update count"
+        },
+        "resource_versions" : {
+          "type" : "number",
+          "format" : "integer",
+          "description" : "Resource version count"
+        }
+      },
+      "description" : "API stats"
+    },
+    "inline_response_200" : {
+      "properties" : {
+        "status" : {
+          "$ref" : "#/definitions/inline_response_200_status"
+        },
+        "stats" : {
+          "$ref" : "#/definitions/inline_response_200_stats"
+        }
+      }
+    },
+    "inline_response_200_1" : {
+      "properties" : {
+        "events" : {
+          "type" : "array",
+          "description" : "Events",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "inline_response_200_2" : {
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "description" : "ID of the registered Webhook"
+        },
+        "secret" : {
+          "type" : "string",
+          "description" : "Registration secret"
+        }
+      }
+    },
+    "inline_response_400" : {
+      "properties" : {
+        "error" : {
+          "type" : "string",
+          "description" : "Error message"
+        }
+      }
+    },
+    "inline_response_200_3" : {
+      "properties" : {
+        "status" : {
+          "type" : "number",
+          "format" : "integer",
+          "description" : "Status id"
+        },
+        "failedConnections" : {
+          "type" : "number",
+          "format" : "integer",
+          "description" : "Amount of failed connections"
+        }
+      }
+    }
+  },
+  "parameters" : {
+    "sizeParam" : {
+      "name" : "size",
+      "in" : "query",
+      "description" : "Size of the returned array",
+      "required" : false,
+      "type" : "number",
+      "format" : "integer"
+    },
+    "pageParam" : {
+      "name" : "page",
+      "in" : "query",
+      "description" : "Page index",
+      "required" : false,
+      "type" : "number",
+      "format" : "integer"
+    },
+    "sortParam" : {
+      "name" : "sort",
+      "in" : "query",
+      "description" : "Field to sort by. (Use a +/- prefix for ascending/descending order)",
+      "required" : false,
+      "type" : "string"
+    },
+    "fieldsParam" : {
+      "name" : "fields",
+      "in" : "query",
+      "description" : "Fields to return, separated by commas",
+      "required" : false,
+      "type" : "string"
+    }
+  },
+  "responses" : {
+    "authorArray" : {
+      "description" : "Author Array",
+      "schema" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/definitions/Author"
+        }
+      },
+      "headers" : {
+        "X-Page-Sort" : {
+          "type" : "string",
+          "description" : "Field the elements are sorted by"
+        },
+        "X-Page-Order" : {
+          "type" : "integer",
+          "description" : "Sort order"
+        },
+        "X-Page-Size" : {
+          "type" : "integer",
+          "description" : "Number of elements on the current page"
+        },
+        "X-Page-Index" : {
+          "type" : "integer",
+          "description" : "Current page index"
+        },
+        "X-Page-Count" : {
+          "type" : "integer",
+          "description" : "Total amount of pages"
+        }
+      }
+    },
+    "categoryArray" : {
+      "description" : "Category Array",
+      "schema" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/definitions/Category"
+        }
+      },
+      "headers" : {
+        "X-Page-Sort" : {
+          "type" : "string",
+          "description" : "Field the elements are sorted by"
+        },
+        "X-Page-Order" : {
+          "type" : "integer",
+          "description" : "Sort order"
+        },
+        "X-Page-Size" : {
+          "type" : "integer",
+          "description" : "Number of elements on the current page"
+        },
+        "X-Page-Index" : {
+          "type" : "integer",
+          "description" : "Current page index"
+        },
+        "X-Page-Count" : {
+          "type" : "integer",
+          "description" : "Total amount of pages"
+        }
+      }
+    },
+    "notFound" : {
+      "description" : "Requested object not found"
+    },
+    "resourceArray" : {
+      "description" : "Resource Array",
+      "schema" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/definitions/Resource"
+        }
+      },
+      "headers" : {
+        "X-Page-Sort" : {
+          "type" : "string",
+          "description" : "Field the elements are sorted by"
+        },
+        "X-Page-Order" : {
+          "type" : "integer",
+          "description" : "Sort order"
+        },
+        "X-Page-Size" : {
+          "type" : "integer",
+          "description" : "Number of elements on the current page"
+        },
+        "X-Page-Index" : {
+          "type" : "integer",
+          "description" : "Current page index"
+        },
+        "X-Page-Count" : {
+          "type" : "integer",
+          "description" : "Total amount of pages"
+        }
+      }
+    },
+    "reviewArray" : {
+      "description" : "Review Array",
+      "schema" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/definitions/ResourceReview"
+        }
+      },
+      "headers" : {
+        "X-Page-Sort" : {
+          "type" : "string",
+          "description" : "Field the elements are sorted by"
+        },
+        "X-Page-Order" : {
+          "type" : "integer",
+          "description" : "Sort order"
+        },
+        "X-Page-Size" : {
+          "type" : "integer",
+          "description" : "Number of elements on the current page"
+        },
+        "X-Page-Index" : {
+          "type" : "integer",
+          "description" : "Current page index"
+        },
+        "X-Page-Count" : {
+          "type" : "integer",
+          "description" : "Total amount of pages"
+        }
+      }
+    },
+    "success" : {
+      "description" : "Successful response"
+    },
+    "updateArray" : {
+      "description" : "Update Array",
+      "schema" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/definitions/ResourceUpdate"
+        }
+      },
+      "headers" : {
+        "X-Page-Sort" : {
+          "type" : "string",
+          "description" : "Field the elements are sorted by"
+        },
+        "X-Page-Order" : {
+          "type" : "integer",
+          "description" : "Sort order"
+        },
+        "X-Page-Size" : {
+          "type" : "integer",
+          "description" : "Number of elements on the current page"
+        },
+        "X-Page-Index" : {
+          "type" : "integer",
+          "description" : "Current page index"
+        },
+        "X-Page-Count" : {
+          "type" : "integer",
+          "description" : "Total amount of pages"
+        }
+      }
+    },
+    "versionArray" : {
+      "description" : "Version Array",
+      "schema" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/definitions/ResourceVersion"
+        }
+      },
+      "headers" : {
+        "X-Page-Sort" : {
+          "type" : "string",
+          "description" : "Field the elements are sorted by"
+        },
+        "X-Page-Order" : {
+          "type" : "integer",
+          "description" : "Sort order"
+        },
+        "X-Page-Size" : {
+          "type" : "integer",
+          "description" : "Number of elements on the current page"
+        },
+        "X-Page-Index" : {
+          "type" : "integer",
+          "description" : "Current page index"
+        },
+        "X-Page-Count" : {
+          "type" : "integer",
+          "description" : "Total amount of pages"
+        }
+      }
+    }
+  }
+}
