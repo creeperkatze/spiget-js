@@ -15,7 +15,7 @@ hero:
       text: GitHub
       link: https://github.com/creeperkatze/spiget-js
     - theme: alt
-      text: Npm
+      text: npm
       link: https://www.npmjs.com/package/spiget-js
 
 features:
