@@ -1,6 +1,6 @@
 {
   "name": "spiget-js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A framework-agnostic fully typed JavaScript client for the Spiget API",
   "homepage": "https://spiget-js.creeperkatze.dev",
   "type": "module",
