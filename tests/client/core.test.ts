@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, afterEach } from 'vitest';
 import { createTestClient } from '../utils/client.js';
 import { createMockFetch, jsonResponse, errorResponse } from '../utils/http.js';
 import { SpigetError } from '../../src/errors.js';
@@ -58,5 +58,28 @@ describe('SpigetClientCore', () => {
       expect((err as SpigetError).message).toBe('Invalid request');
       expect((err as SpigetError).status).toBe(400);
     }
+  });
+
+  describe('default fetch binding', () => {
+    const originalFetch = globalThis.fetch;
+
+    afterEach(() => {
+      globalThis.fetch = originalFetch;
+    });
+
+    it('invokes the default globalThis.fetch with a `this` receiver it accepts', async () => {
+      // Simulates a browser's branded fetch, which throws "Illegal invocation" if `this` isn't `window`.
+      globalThis.fetch = function () {
+        if (this !== globalThis) {
+          throw new TypeError("Failed to execute 'fetch' on 'Window': Illegal invocation");
+        }
+        return Promise.resolve(jsonResponse([]));
+      } as typeof fetch;
+
+      const client = new SpigetClient();
+      const result = await client.categories.list();
+
+      expect(result.data).toEqual([]);
+    });
   });
 });
